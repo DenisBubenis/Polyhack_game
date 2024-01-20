@@ -90,6 +90,8 @@ objects.append(mainScene.fence(918, 980))
 fontain = mainScene.font(2160, 200)
 
 flor = house.flor(150, -10)
+coridor = house.coridor(-986, -40)
+down_room = house.down_room(-1146, 560)
 
 r = 2750
 
@@ -135,6 +137,8 @@ def house_scene(mainloop, left, right, up, down, animation_st, ani_dop, cam_X, c
     house = True
     camSoft = 1
     camSpeed = 10
+    #Sanek.move_(950, 500)
+    a = 0
     while house:
         for e in pygame.event.get():
             # if e.type == pygame.KEYDOWN and e.key == pygame.K_LSHIFT:
@@ -200,6 +204,12 @@ def house_scene(mainloop, left, right, up, down, animation_st, ani_dop, cam_X, c
         flor.update(DISPLAYSURF, debug)
         flor.ch_move(cam_X, cam_Y)
 
+        coridor.update(DISPLAYSURF, debug)
+        coridor.ch_move(cam_X, cam_Y)
+
+        down_room.update(DISPLAYSURF, debug)
+        down_room.ch_move(cam_X, cam_Y)
+
         Sanek.update(left, right, up, down, DISPLAYSURF, animation_st, debug, False)
         Sanek.ch_move(cam_X, cam_Y)
 
@@ -254,17 +264,31 @@ def house_scene(mainloop, left, right, up, down, animation_st, ani_dop, cam_X, c
             cam_down = 1
 
 
-        if pygame.Rect.colliderect(flor.rect_waalUp, Sanek.rect) or pygame.Rect.colliderect(flor.rect_waalR, Sanek.rect) or pygame.Rect.colliderect(flor.rect_waalL1, Sanek.rect) or pygame.Rect.colliderect(flor.rect_waalL2, Sanek.rect) or pygame.Rect.colliderect(flor.rect_waalDown, Sanek.rect) or pygame.Rect.colliderect(flor.rect_TU, Sanek.rect):
+        if pygame.Rect.colliderect(flor.rect_waalUp, Sanek.rect) or pygame.Rect.colliderect(flor.rect_waalR, Sanek.rect) or pygame.Rect.colliderect(flor.rect_waalL1, Sanek.rect) or pygame.Rect.colliderect(flor.rect_waalL2, Sanek.rect) or pygame.Rect.colliderect(flor.rect_waalDown, Sanek.rect) or pygame.Rect.colliderect(flor.rect_TU, Sanek.rect) or pygame.Rect.colliderect(flor.rect_Dor, Sanek.rect):
             Sanek.fallback()
 
+        if not pygame.Rect.colliderect(coridor.rect2, Sanek.rect):
+            if not pygame.Rect.colliderect(flor.rect, Sanek.rect):
+                Sanek.fallback()
 
         if pygame.Rect.colliderect(flor.rect_exit, Sanek.rect):
             house = False
+            Sanek.move_(700, 450)
+            fon2.stop()
+            fon.play(-1)
+
             main_scene(mainLoop, left, right, up, down, animation_st, ani_dop, cam_X, cam_Y, debug)
 
 
+        # if (a < 3):
+        #     pass
+        #     Sanek.move_(920, 500)
+
+
+        a += 1
 
         pygame.display.update()
+
 
         clock.tick(Data.fps)
 
@@ -458,6 +482,7 @@ def main_scene(mainLoop, left, right, up, down, animation_st, ani_dop, cam_X, ca
             mainLoop = False
             fon.stop()
             fon2.play(-1)
+            Sanek.move_(920, 500)
             house_scene(mainLoop, left, right, up, down, animation_st, ani_dop, cam_X, cam_Y, debug)
 
 

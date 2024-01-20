@@ -63,7 +63,7 @@ class mainChar(pygame.sprite.Sprite):
 
     # функция перемещения, параметры - нажата ли стрелочки влево и вправо
     def update(self, left, right, up, down, screen, animation_st, debug, run):
-
+        print(self.rect.x, self.rect.y)
 
         if not (up or down):
             self.yvel = 0
@@ -154,6 +154,6 @@ class mainChar(pygame.sprite.Sprite):
         self.rect.x += moveX
         self.rect.y += moveY
 
-    def move_(self, moveX, moveY):
-        self.rect.x += moveX
-        self.rect.y += moveY
+    def move_(self, x, y):
+        self.rect.x = x
+        self.rect.y = y
